@@ -1,0 +1,82 @@
+---
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+        AdminPrincipal: Role.MEMEBER
+
+    - &Org1
+        Name: Org1MSP
+        ID: Org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+        AdminPrincipal: Role.MEMBER
+        AnchorPeers:
+            - Host: org1peer1
+              Port: 30110
+            - Host: org1peer2
+              Port: 30110
+    - &Org2
+        Name: Org2MSP
+        ID: Org2MSP
+        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+        AdminPrincipal: Role.MEMBER
+        AnchorPeers:
+            - Host: org2peer1
+              Port: 30110
+            - Host: org2peer2
+              Port: 30110
+
+
+Orderer: &OrdererDefaults
+
+    OrdererType: kafka
+    Addresses:
+        #Añadir todos los orderer que existan en la red o solo 1 y entre ellos se comunican?
+        - orderer-0:31010
+        - orderer-1:31010
+        - orderer-2:31010
+        - orderer-3:31010
+        
+    BatchTimeout: 10s
+    BatchSize:
+        MaxMessageCount: 50
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - kafka-service-0:9092
+            - kafka-service-1:9092
+            - kafka-service-2:9092
+            - kafka-service-3:9092
+           
+
+    Organizations:
+
+Application: &ApplicationDefaults
+    Organizations:
+
+    Capabilities:
+
+Profiles:
+
+    TwoOrgsOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+
+    TwoOrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
