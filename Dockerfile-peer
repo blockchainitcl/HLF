@@ -5,4 +5,5 @@ COPY genesis.block /fabric/genesis.block
 COPY peerOrganizations fabric/crypto-config/peerorganizations
 COPY chaincode/src/chaincode/Wallet/Wallet.go /fabric/chaincode/src/chaincode/Wallet/Wallet.go
 COPY Org1MSPanchors.tx /fabric/Org1MSPanchors.tx
+COPY Org2MSPanchors.tx /fabric/Org2MSPanchors.tx
 COPY configtx.yaml /fabric/configtx.yaml
