@@ -1,0 +1,9 @@
+FROM hyperledger/fabric-tools:amd64-1.3.0
+RUN mkdir fabric/
+COPY channel1.tx /fabric/channel1.tx
+COPY genesis.block /fabric/genesis.block
+COPY configtx.yaml /fabric/configtx.yaml
+COPY ordererOrganizations /fabric/crypto-config/ordererOrganizations/
+COPY peerOrganizations /fabric/crypto-config/peerOrganizations/
+COPY Org1MSPanchors.tx /fabric/Org1MSPanchors.tx
+COPY Org2MSPanchors.tx /fabric/Org2MSPanchors.tx
