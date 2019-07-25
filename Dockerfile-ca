@@ -1,0 +1,3 @@
+FROM hyperledger/fabric-ca:amd64-1.3.0
+RUN mkdir fabric/
+COPY peerOrganizations /fabric/crypto-config/peerOrganizations/
